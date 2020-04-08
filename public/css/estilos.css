@@ -1,3 +1,7 @@
+bodu {
+  overflow: scroll;
+}
+
 .frase {
   font-size: 1.5em;
   text-align: left;
@@ -23,4 +27,8 @@
 
 .borda-vermelha{
   border: 3px solid #ef5350;
+}
+
+.placar {
+  display: none;
 }
