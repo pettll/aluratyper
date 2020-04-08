@@ -1,1 +1,1 @@
-Alura Typer
+*Alura Typer
