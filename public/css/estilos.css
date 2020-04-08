@@ -1,0 +1,26 @@
+.frase {
+  font-size: 1.5em;
+  text-align: left;
+}
+
+.campo-digitacao {
+  font-size: 1.2em;
+  height: 30%;
+  border: 3px solid #000;
+}
+
+.campo-desativado {
+  background-color: #78909c;
+}
+
+.items {
+    vertical-align: middle;
+}
+
+.borda-verde{
+  border: 3px solid #66bb6a;
+}
+
+.borda-vermelha{
+  border: 3px solid #ef5350;
+}

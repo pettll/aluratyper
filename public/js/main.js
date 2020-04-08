@@ -1,16 +1,17 @@
 //VARIÁVEIS GLOBAIS
 $("#tempo-digitacao").text("5"); // tempo para escrever
 //frase para digitar
-$(".frase").text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
+$(".frase").text("Essa frase tem oito palavras")
 var tempoInicial = $("#tempo-digitacao").text();
 var campo = $(".campo-digitacao");
-
+var frase = $(".frase").text();
 
 //chamada de funções
 $(function(){
   atualizaTamanhoFrase();
   inicializaContadores();
   inicializaCronometro();
+  inicializaMarcadores();
   reiniciarJogo();
   $("#botao-reiniciar").click(reiniciarJogo);
 });
@@ -41,14 +42,32 @@ function inicializaContadores() {
 function inicializaCronometro() {
   var tempoRestante = $("#tempo-digitacao").text();
   campo.one("focus", function(){
+    $("#botao-reiniciar").addClass("disabled");
     var cronometroID = setInterval(function(){
       tempoRestante--;
       $("#tempo-digitacao").text(tempoRestante);
       if (tempoRestante < 1) {
         campo.attr("disabled", true);
         clearInterval(cronometroID);
+        $("#botao-reiniciar").removeClass("disabled");
+        campo.addClass("campo-desativado");
       }
     },1000)
+  });
+}
+
+//Marcador de certo e errado
+function inicializaMarcadores() {
+  campo.on("input", function(){
+    var digitado = campo.val();
+    var comparavel = frase.substr(0, digitado.length);
+    if (digitado == comparavel) {
+      campo.addClass("borda-verde");
+      campo.removeClass("borda-vermelha");
+    } else {
+      campo.addClass("borda-vermelha");
+      campo.removeClass("borda-verde");
+    }
   });
 }
 
@@ -59,5 +78,8 @@ function reiniciarJogo(){
   $("#contador-palavras").text("0");
   $("#contador-caracteres").text("0");
   $("#tempo-digitacao").text(tempoInicial);
+  campo.removeClass("campo-desativado");
+  campo.removeClass("borda-verde");
+  campo.removeClass("borda-vermelha");
   inicializaCronometro();
 }
