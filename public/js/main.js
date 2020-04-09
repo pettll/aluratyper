@@ -1,14 +1,14 @@
 //VARIÁVEIS GLOBAIS
-$("#tempo-digitacao").text("5"); // tempo para escrever
+//$("#tempo-digitacao").text("5"); // tempo para escrever
 //frase para digitar
-$(".frase").text("Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.")
+//$(".frase").text("Duas.")
 var tempoInicial = $("#tempo-digitacao").text();
 var campo = $(".campo-digitacao");
-var frase = $(".frase").text();
 
 //chamada de funções
 $(function(){
   atualizaTamanhoFrase();
+  atualizaTempoInicial();
   inicializaContadores();
   inicializaCronometro();
   inicializaMarcadores();
@@ -17,10 +17,25 @@ $(function(){
 //  reiniciarJogo();
 //  novaLinha();
   $("#botao-reiniciar").click(reiniciarJogo);
+  atualizaPlacar();
+  $("#usuarios").selectize({
+    create: true,
+    sortField: 'text'
+  });
+  $(".tooltip").tooltipster({
+    trigger: "custom"
+  });
 });
 
 
 //FUNÇÕES
+//atualizar a duração do tempo
+function atualizaTempoInicial(tempo) {
+  tempoInicial = tempo;
+$("#tempo-digitacao").text(tempo);
+}
+
+
 //contador de palavras do texto principal
 function atualizaTamanhoFrase() {
   var frase = $(".frase").text();
@@ -42,8 +57,8 @@ function inicializaContadores() {
 
 //cronometro
 function inicializaCronometro() {
-  var tempoRestante = $("#tempo-digitacao").text();
   campo.one("focus", function(){
+    var tempoRestante = $("#tempo-digitacao").text();
     $("#botao-reiniciar").addClass("disabled");
     var cronometroID = setInterval(function(){
       tempoRestante--;
@@ -68,6 +83,7 @@ function finalizaJogo(){
 //Marcador de certo e errado
 function inicializaMarcadores() {
   campo.on("input", function(){
+    var frase = $(".frase").text();
     var digitado = campo.val();
     if (frase.startsWith(digitado)) {
       campo.addClass("borda-verde");
